@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Zoom</title>
+	<style>
+		*{
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			position: relative;
+		}
+		.image{
+			margin: 0 auto;
+			text-align: center;
+			max-width: 900px;
+			min-width: 300px;
+		}
+		#zoom{
+			z-index: 2;
+			position: absolute;
+			top:0;
+			display: none;
+			left:0;
+			width: 100vw;
+			height: 100vh;
+			background-color: rgba(8, 8, 8, 0.8);
+		}
+		.show img{
+			top:50vh;
+			left: 50vw;
+			transform: translate(-50%,-50%);
+			width: 70vw;
+			animation: incwi 0.3s ease;
+		}
+		.hide img{
+			transform: translate(-50%,-50%);
+			top:50vh;
+			left: 50vw;
+			width: 0;
+			animation: decwi 0.3s ease-in;
+		}
+		@keyframes incwi{
+			0%{
+				width:0;
+			}
+			100%{
+				width:70vw;
+			}
+		}
+		@keyframes decwi{
+			0%{
+				width:70vw;
+			}
+			100%{
+				width:0;
+			}
+		}
+		#close{
+			position: absolute;
+			padding: 5px;
+			text-align: center;
+			border: 1px solid black;
+			background-color: white;
+			color: black;
+			border-radius: 50px;
+			font-size: 1.2em;
+			font-family: 'Segoe UI';
+			font-weight: 300;
+			width: 60px;
+			height: 60px;
+			left:90vw;
+			top:8vh;
+		}
+		.image{
+			position: absolute;
+			position: relative;
+		}
+		.image img{
+			width: 200px;
+		}
+		#image{
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<div class="show" id="zoom">
+		<img id="image" src="" alt="">
+		<button id="close" onclick="closing()">X</button>
+	</div>
+	<div class="image" id="list">
+		<img src="images/1.jpg" alt="">
+		<img src="images/7.jpg" alt="">
+		<img src="images/3.jpg" alt="">
+		<img src="images/4.jpg" alt="">
+		<img src="images/5.jpg" alt="">
+		<img src="images/6.jpg" alt="">
+		<img src="images/9.jpg" alt="">
+		<img src="images/8.jpg" alt="">
+	</div>
+	<script>
+		function show(event){
+			let image = document.getElementById("image");
+			image.setAttribute("src", event.target.getAttribute("src"));
+			let zoom = document.getElementById("zoom");
+			zoom.style.display = "block";
+		}
+		let list = document.getElementById("list");
+		for(let i = 0; i < list.children.length; ++i){
+			const element = list.children[i];
+			element.addEventListener("click", show);
+		}
+		function closing(){
+			document.getElementById("close").parentElement.className = 'hide';
+			setTimeout(()=>{
+				document.getElementById("close").parentElement.style.display = 'none';
+				document.getElementById("close").parentElement.className = 'show';
+			},350);
+		}
+		document.onkeypress = function(event){
+			if(event.keyCode == 27){
+				document.getElementById("close").parentElement.className = 'hide';
+				setTimeout(()=>{
+					document.getElementById("close").parentElement.style.display = 'none';
+					document.getElementById("close").parentElement.className = 'show';
+				},350);
+			}
+		}
+	</script>
+</body>
+</html>
